@@ -2,7 +2,9 @@
 # Easy
 
 # Given a sentence, reverse the words of the sentence. 
+
 # For example, "i live in a house" becomes "house a in live i".
+
 
 # -----------------------------------------------------
 
@@ -16,6 +18,8 @@ def reverse_words(sent: str) -> str:
         rev_words[len(words) - 1 - i] = words[i]
     return ' '.join(rev_words)
 
+
+# -----------------------------------------------------
 
 import pytest
 
