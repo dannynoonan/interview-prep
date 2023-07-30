@@ -36,5 +36,6 @@ def test_longest_unique_substring():
     string = "whatwhywhere"
     longest_unique = "atwhy"
     assert(longest_unique_substring(string) == longest_unique)
+    assert(longest_unique_substring('flavaflavehassomeflavortosavor') == 'meflavort')
 
 pytest.main()
