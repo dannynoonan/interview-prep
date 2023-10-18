@@ -29,6 +29,21 @@ def find_insertion_index(s_arr: list, t: int) -> int:
             high = mid - 1
     raise Exception(f"Fail for target {t}")
 
+# alt version 10/17 (maybe the other one doesn't work in every case?)
+def insertion_index(arr: list, v: int) -> int:
+    low = 0
+    high = len(arr)-1
+    while low <= high:
+        mid = round((low+high)/2)
+        if v < arr[mid] and (mid == 0 or v >= arr[mid-1]):
+            return mid
+        if v < arr[mid]:
+            high = mid-1
+        elif v > arr[mid] and mid == len(arr)-1:
+            return len(arr)
+        else:
+            low = mid+1
+    raise Exception('problems')
 
 # -----------------------------------------------------
 
