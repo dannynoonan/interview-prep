@@ -48,6 +48,34 @@ class StreamWithMedian(object):
         if len(self.gt_arr) > len(self.lt_arr):
             return self.gt_arr[0]
         return (self.gt_arr[0] - self.lt_arr[0]) / 2
+
+
+# simpler approach without comparisons 10/24/23
+
+class MedianFinder(object):
+    def __init__(self):
+        self.heap_gt = []
+        heapq.heapify(self.heap_gt)
+        self.heap_lt = []
+        heapq.heapify(self.heap_lt)
+        
+    def get_median(self) -> int:
+        if not self.heap_gt:
+            raise Exception('median finder is empty, could not extract median value')
+        if len(self.heap_gt) > len(self.heap_lt):
+            return self.heap_gt[0]
+        else:
+            return (self.heap_gt[0] - self.heap_lt[0]) / 2
+
+    def add(self, v: int) -> None:
+        if not self.heap_gt:
+            heapq.heappush(self.heap_gt, v)
+        elif not self.heap_lt or len(self.heap_gt) > len(self.heap_lt):
+            popped = heapq.heappushpop(self.heap_gt, v)
+            heapq.heappush(self.heap_lt, -popped)
+        else:
+            popped = heapq.heappushpop(self.heap_lt, -v)
+            heapq.heappush(self.heap_gt, -popped)
         
 # -----------------------------------------------------
 
