@@ -39,6 +39,29 @@ def matrix_to_spiral(mx: list) -> list:
         layer += 1
     return out
 
+
+def matrix_to_spiral_alt(mx: list) -> list:
+    out = []
+    x_low = 0
+    x_high = len(mx[0])-1
+    y_low = 0
+    y_high = len(mx)-1
+    while x_low <= x_high and y_low <= y_high:
+        for i in range(x_low, x_high):
+            out.append(mx[y_low][i])
+        for i in range(y_low, y_high):
+            out.append(mx[i][x_high])
+        for i in range(x_high, x_low, -1):
+            out.append(mx[y_high][i])
+        for i in range(y_high, y_low, -1):
+            out.append(mx[i][x_low])
+        x_low += 1
+        x_high -= 1
+        y_low += 1
+        y_high -= 1
+    return out
+
+
 # -----------------------------------------------------
 
 import pytest
