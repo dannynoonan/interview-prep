@@ -12,6 +12,31 @@
 # Time Complexity: O(NlogN), where N is the number of intervals. NlogN time is for sorting the Points.
 # Space Complexity: O(N)
 
+
+# pythonic solution using itemgetter
+
+def intervals_overlap(intervals: list) -> bool:
+    points = []
+    for intv in intervals:
+        points.append(dict(x=intv[0], start=True))
+        points.append(dict(x=intv[1], start=False))
+
+    sorted_points = sorted(points, key=itemgetter('x', 'start'))
+
+    intv_open = False
+    for p in sorted_points:
+        if p['start'] and intv_open:
+            return True
+        if p['start']:
+            intv_open = True
+        else:
+            intv_open = False
+        
+    return False
+
+
+# OO solution using explicit object comparison
+
 class Point(object):
     def __init__(self, val: int, is_low: bool):
         self.val = val
