@@ -13,6 +13,50 @@
 # Time Complexity: O(Nlog(N))
 # Space Complexity: O(N)
 
+
+
+####### pythonic way using itemgetter #######
+
+import heapq
+from operator import itemgetter
+
+def draw_skyline(buildings: list) -> list:
+    points = []
+    for b in buildings:
+        points.append(dict(x=b['x0'], y=-b['y'], start=True)) 
+        points.append(dict(x=b['x1'], y=-b['y'], start=False)) 
+    sorted_points = sorted(points, key=itemgetter('x', 'start', 'y'))
+
+    highest = []
+    heapq.heapify(highest)
+    skyline = []
+    curr_rectangle = {}
+
+    for p in sorted_points:
+        if p['start']:
+            if not highest:
+                curr_rectangle = dict(x0=p['x'], y=-p['y'])
+            elif p['y'] < highest[0]:
+                curr_rectangle['x1'] = p['x']
+                skyline.append(curr_rectangle)
+                curr_rectangle = dict(x0=p['x'], y=-p['y'])
+            heapq.heappush(highest, p['y'])
+        else:
+            if p['y'] == highest[0]:
+                heapq.heappop(highest)
+                curr_rectangle['x1'] = p['x']
+                skyline.append(curr_rectangle)
+                if highest:
+                    curr_rectangle = dict(x0=p['x'], y=-highest[0])
+
+    return skyline
+
+# same tests work, just substitute 'dict' for 'Block'
+
+
+
+######## old object-oriented way #######
+
 import heapq
 
 class Point(object):
