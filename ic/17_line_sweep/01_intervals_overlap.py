@@ -13,14 +13,36 @@
 # Space Complexity: O(N)
 
 
-# pythonic solution using itemgetter
+# tuple / itemgetter approach
+
+from operator import itemgetter
 
 def intervals_overlap(intervals: list) -> bool:
+    points = []
+    for intvl in intervals:
+        points.append((intvl[0], True))
+        points.append((intvl[1], False))
+    points = sorted(points, key=itemgetter(0, 1))
+
+    intvl_open = False
+    for p in points:
+        if p[1]:
+            if intvl_open:
+                return True
+            intvl_open = True
+        else:
+            intvl_open = False
+
+    return False
+
+
+# dict / itemgetter approach
+
+def intervals_overlap_dict(intervals: list) -> bool:
     points = []
     for intv in intervals:
         points.append(dict(x=intv[0], start=True))
         points.append(dict(x=intv[1], start=False))
-
     sorted_points = sorted(points, key=itemgetter('x', 'start'))
 
     intv_open = False
@@ -57,7 +79,7 @@ class Point(object):
             return True
         return False
 
-def intervals_overlap(intervals: list) -> bool:
+def intervals_overlap_oo(intervals: list) -> bool:
     points = []
     for ivl in intervals:
         points.append(Point(ivl[0], True))
@@ -84,5 +106,17 @@ def test_intervals_overlap():
     assert(not intervals_overlap([[5,7], [10,13], [1,3], [7,8]]))
     assert(not intervals_overlap([[3,6], [1,3], [6,9]]))
     assert(intervals_overlap([[6,8], [1,5], [2,4]]))
+
+    assert(not intervals_overlap_dict([[1,3], [6,9]]))
+    assert(intervals_overlap_dict([[5,7], [1,3], [6,9]]))
+    assert(not intervals_overlap_dict([[5,7], [10,13], [1,3], [7,8]]))
+    assert(not intervals_overlap_dict([[3,6], [1,3], [6,9]]))
+    assert(intervals_overlap_dict([[6,8], [1,5], [2,4]]))
+
+    assert(not intervals_overlap_oo([[1,3], [6,9]]))
+    assert(intervals_overlap_oo([[5,7], [1,3], [6,9]]))
+    assert(not intervals_overlap_oo([[5,7], [10,13], [1,3], [7,8]]))
+    assert(not intervals_overlap_oo([[3,6], [1,3], [6,9]]))
+    assert(intervals_overlap_oo([[6,8], [1,5], [2,4]]))
 
 pytest.main()
