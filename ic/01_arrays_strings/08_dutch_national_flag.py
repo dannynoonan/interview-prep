@@ -38,10 +38,19 @@ def swap(arr, i, j):
 import pytest
 
 def test_dnf():
-    arr = [5,2,4,4,6,4,4,3]
-    pivot = 4
-    result = [3,2,4,4,4,4,6,5]
-    dnf(arr, pivot)
-    assert(arr == result)
+    arr1 = [5, 2, 4, 4, 6, 4, 4, 3]
+    result1 = [3, 2, 4, 4, 4, 4, 6, 5]
+    dnf(arr1, 4)
+    assert(arr1 == result1)
+
+    arr2 = [4, 2, 0, 1, 3, 4, 2, 9, 7, 6, 5, 8]
+    result2 = [2, 0, 1, 3, 2, 4, 4, 7, 6, 5, 8, 9]
+    dnf(arr2, 4)
+    assert(arr2 == result2)
+
+    arr3 = [5, 6, 5, 0, 3, 8, 3, 0, 0, 9, 3, 4]
+    result3 = [4, 0, 3, 3, 3, 0, 0, 5, 5, 9, 8, 6]
+    dnf(arr3, 5)
+    assert(arr3 == result3)
 
 pytest.main()
