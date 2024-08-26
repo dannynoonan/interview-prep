@@ -44,6 +44,26 @@ def plurality_search(arr: list, k: int) -> int:
 
     raise Exception(f"No value in arr of length={len(arr)} reached plurality threshold={len(arr)/k} for k={k}, final tally map={tallies}")
 
+
+# -----------------------------------------------------
+
+# I really feel like this should be the answer, though maybe there's a big O reason that favors the original approach
+
+def plurality_search_better(arr: list, k: int) -> int:
+    vals_to_counts = {}
+    for v in arr:
+        if v not in vals_to_counts:
+            vals_to_counts[v] = 0
+        vals_to_counts[v] += 1
+
+    sorted_vals = [(k,v) for k,v in sorted(vals_to_counts.items(), key=lambda x: x[1], reverse=True)]
+    if sorted_vals[0][1] > len(arr) / k:
+        return int(sorted_vals[0][0])
+    raise Exception(f'No value occurred more than {k} times')
+
+
+# -----------------------------------------------------
+
 import pytest
 
 def test_plurality_search():
